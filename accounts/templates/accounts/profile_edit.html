@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3>Editar Mi Perfil</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %} 
+                        
+                        {{ form.as_p }}
+                        
+                        {# ---------------------------------------------------------------------- #}
+                        {# BLOQUE DE BOTONES CORREGIDO: Ahora incluye "Volver a Temas" #}
+                        <div class="mt-3 d-flex justify-content-between">
+                            <div>
+                                <a href="{% url 'category_selection' %}" class="btn btn-info me-2">Volver a Temas</a>
+                                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                            </div>
+                            <div>
+                                <a href="{% url 'profile_detail' pk=request.user.pk %}" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </div>
+                        {# ---------------------------------------------------------------------- #}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

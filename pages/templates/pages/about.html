@@ -1,0 +1,89 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de Mí - DocuShare</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .header {
+            background-color:  #1f5032; 
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 { margin: 0; }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            line-height: 1.7;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%; 
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px auto;
+            border: 5px solid #fff;
+            box-shadow: 0 0 15px rgba(160, 80, 124, 0.1);
+        }
+        .container h2 {
+            color: #984f82;
+            text-align: center;
+            margin-top: 0;
+        }
+        .container p {
+            font-size: 1.1rem;
+            color: #555;
+            text-align: justify; 
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #95a5a6;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Acerca del Autor</h1>
+    </div>
+
+    <div class="container">
+        <img src="https://placehold.co/150x150/984f82/FFF?text=RV" alt="Foto de Regina Villazuela" class="profile-pic">
+
+        <h2>Regina Villazuela</h2>
+        
+        <p>
+            ¡Hola! Soy Regina, estudiante de Ingeniería Biomédica en la <strong>UNSAM</strong> y creadora de DocuShare. 
+            Este proyecto nació con la idea de hacer que el acceso a la información académica 
+            y a los papers de estudio sea más sencillo, organizado y divertido para todos.
+        </p>
+        <p>
+            ¡Espero que esta página te acompañe en tus sesiones de estudio!
+        </p>
+
+        <a href="{% url 'category_selection' %}" class="back-button">
+            ← Volver a las categorías
+        </a>
+    </div>
+</body>
+</html>

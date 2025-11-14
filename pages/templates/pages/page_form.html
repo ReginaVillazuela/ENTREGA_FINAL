@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Crear Nuevo Paper - DocuShare{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg p-4 border-primary">
+                <h1 class="text-center mb-4 text-primary">Crear Nuevo Documento</h1>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {# Renderización simple y robusta del formulario #}
+                    {# Esto incluye el campo de imagen automáticamente #}
+                    {{ form.as_p }}
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Publicar Paper</button>
+                        <a href="{% url 'category_selection' %}" class="btn btn-secondary btn-lg">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

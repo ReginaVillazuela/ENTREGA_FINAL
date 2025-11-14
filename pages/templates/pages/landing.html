@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuShare - Bienvenido</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color:  #cee0f1;
+            text-align: center;
+            margin-top: 12%;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #555;
+            margin: 20px auto 40px;
+            width: 65%;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .login-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .login-btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        .register-btn {
+            background-color: #0078D7;
+            color: white;
+        }
+        .register-btn:hover {
+            background-color: #0069c0;
+            transform: scale(1.05);
+        }
+        footer {
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Bienvenido a <span style="color:#0078D7;">DocuShare</span>!</h1>
+    <p>
+        Una plataforma creada por <strong>Regina Villazuela</strong> para facilitar el acceso y 
+        la organización de la información de manera práctica y divertida.
+    </p>
+<a href="{% url 'login' %}" class="button login-btn">Iniciar sesión</a>
+<a href="{% url 'register' %}" class="button register-btn">Registrarme</a>
+
+    <footer>
+        © 2025 DocuShare — Todos los derechos reservados
+    </footer>
+</body>
+</html>

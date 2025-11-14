@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block title %}{{ category_name }} - DocuShare{% endblock title %}
+
+{% block content %}
+<div class="container">
+    
+    <style>
+        
+        .search-form {
+            display: flex;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden; 
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-right: none;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-button {
+            background-color: #4CAF50; 
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .read-more {
+            background-color: #3498db; 
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+        .read-more:hover {
+            background-color: #2980b9;
+        }
+        .page-item {
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+            text-align: left;
+        }
+        
+    </style>
+
+    
+    <h1 class="mb-4">{{ category_name }}</h1>
+
+    <div class="mb-4">
+        <a href="{% url 'category_selection' %}" class="btn btn-info">Volver a Temas</a>
+    </div>
+    
+
+    <form method="GET" action="{% url 'pages_list' %}" class="search-form">
+        <input 
+            type="search" 
+            name="q" 
+            placeholder="Buscar en {{ category_name|lower }}..." 
+            value="{{ query|default:'' }}" 
+            class="search-input"
+        >
+        {% if category_code %}
+        <input type="hidden" name="category" value="{{ category_code }}">
+        {% endif %}
+
+        <button type="submit" class="search-button">Buscar</button>
+    </form>
+
+    {% if pages %}
+        {% for page in pages %}
+            <div class="page-item">
+                <h2><a href="{% url 'page_detail' page.pk %}" class="text-decoration-none text-primary">{{ page.title }}</a></h2>
+                <div class="page-item-content">
+                    {{ page.content|safe|truncatewords_html:30 }}
+                </div>
+                <a href="{% url 'page_detail' page.pk %}" class="read-more">Leer más</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        {% if query %}
+            <p class="no-pages">No se encontraron papers que coincidan con "{{ query }}".</p>
+        {% else %}
+            <p class="no-pages">No hay páginas en esta categoría todavía.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock content %}

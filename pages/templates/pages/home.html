@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuShare</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #cfdef3;
+            text-align: center;
+            margin-top: 15%; 
+            color: #333;
+            position: relative; 
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            color: #555;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        span {
+            font-weight: bold;
+            color: #0078D7;
+        }
+        .app-start-button {
+            background-color: #4CAF50; 
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        .app-start-button:hover {
+            background-color: #45a049;
+        }
+
+        .about-button {
+            position: fixed; 
+            top: 20px;
+            right: 20px;
+            background-color: #db8bcb; 
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .about-button:hover {
+            background-color: #da91cb;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'about' %}" class="about-button">
+        Acerca del autor
+    </a>
+
+    <h1>¡Bienvenido a <span>DocuShare</span>!</h1>
+    <p>
+        Esta página fue creada por <strong>Regina Villazuela</strong>, estudiante de la <strong>UNSAM</strong>, 
+        con el fin de que el acceso a la información sea más sencillo y divertido.
+    </p>
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="{% url 'category_selection' %}" class="app-start-button">
+            Empezar a descubrir
+        </a>
+    </div>
+    
+</body>
+</html>

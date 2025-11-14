@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - DocuShare</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #1f5032; 
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .paper-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .paper-card img {
+            max-width: 100%; 
+            width: 70%; 
+            height: auto; 
+            border-radius: 8px;
+            margin: 1rem auto; 
+            display: block; 
+        }
+
+        .paper-card h2 {
+            color: #1a73e8;
+            margin-bottom: 0.3rem;
+        }
+
+        .paper-card h4 {
+            color: #555;
+            margin-top: 0;
+        }
+
+        .paper-card .buttons {
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .btn-read { background-color: #1a73e8; }
+        .btn-read:hover { background-color: #155ab6; }
+
+        .btn-edit { background-color: #ff9800; }
+        .btn-edit:hover { background-color: #e68a00; }
+
+        .btn-delete { background-color: #f44336; }
+        .btn-delete:hover { background-color: #d32f2f; }
+
+        .btn-comment { background-color: #4CAF50; }
+        .btn-comment:hover { background-color: #45a049; }
+
+        .comments-section {
+            margin-top: 2rem;
+            background-color: #eef2f7;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .comments-section h3 {
+            margin-top: 0;
+        }
+
+        .comment {
+            background-color: white;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .comment p {
+            margin: 0.3rem 0 0 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: #1a73e8;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Puntaje */
+        .rating {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: #ff9800;
+        }
+
+        .new-comment {
+            margin-top: 1rem;
+        }
+
+        .new-comment textarea {
+            width: 100%;
+            height: 80px;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+
+        .new-comment button {
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>DocuShare - Paper Detail</h1>
+</header>
+
+<div class="container">
+
+    <a href="{% url 'pages_list' %}" class="back-link">← Volver al listado de papers</a>
+
+    <div class="paper-card">
+        <h2>{{ page.title }}</h2>
+        <h4>{{ page.subtitle }}</h4>
+        
+        {% if page.image %}
+            <img src="{{ page.image.url }}" alt="{{ page.title }}">
+        {% endif %}
+        
+        <div>{{ page.content|safe }}</div>
+
+        <div class="buttons">
+            {% if user == page.author %}
+                <a href="{% url 'page_edit' page.pk %}" class="btn btn-edit">Editar</a>
+                <a href="{% url 'page_delete' page.pk %}" class="btn btn-delete">Borrar</a>
+            {% endif %}
+            <a href="#comments" class="btn btn-comment">Comentar</a>
+        </div>
+
+        <div class="rating">
+            ⭐ Puntuación promedio: {{ page.average_rating|default:"Sin puntuar" }}
+        </div>
+        
+        {% if user.is_authenticated %}
+        <div class="rate-section">
+            <form method="post" action="{% url 'page_rate' page.pk %}">
+                {% csrf_token %}
+                <label for="rating">Tu puntuación:</label>
+                <select name="rating" id="rating">
+                    <option value="1">1 ⭐</option>
+                    <option value="2">2 ⭐⭐</option>
+                    <option value="3">3 ⭐⭐⭐</option>
+                    <option value="4">4 ⭐⭐⭐⭐</option>
+                    <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                </select>
+                <button type="submit" class="btn btn-read">Enviar</button>
+            </form>
+        </div>
+        {% else %}
+        <p>Iniciá sesión para puntuar este paper.</p>
+        {% endif %}
+
+    </div>
+
+    <div class="comments-section" id="comments">
+        <h3>Comentarios</h3>
+        {% if page.comments.all %}
+            {% for comment in page.comments.all %}
+            <div class="comment">
+                <strong>{{ comment.user.username }}</strong>:
+                <p>{{ comment.text }}</p>
+                <small>{{ comment.created_at|date:"d M Y H:i" }}</small>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay comentarios aún. Sé el primero en comentar!</p>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <div class="new-comment">
+            <form method="post" action="{% url 'add_comment' page.pk %}">
+                {% csrf_token %}
+                <textarea name="text" placeholder="Escribí tu comentario..."></textarea>
+                <button type="submit" class="btn btn-comment">Comentar</button>
+            </form>
+        </div>
+        {% else %}
+        <p>Iniciá sesión para comentar.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>

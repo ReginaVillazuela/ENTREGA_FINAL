@@ -1,0 +1,42 @@
+{% extends "layout.html" %} 
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2>Perfil de {{ profile.user.username }}</h2>
+                </div>
+                <div class="card-body text-center">
+                    
+                    <img src="{{ profile.image.url }}" alt="Foto de Perfil" 
+                         class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                    
+                    <p class="lead"><strong>Rol:</strong> {{ profile.get_title_display }}</p>
+                    <p><strong>Miembro desde:</strong> {{ profile.user.date_joined|date:"d M Y" }}</p>
+                    
+                    <hr>
+                    
+                    <h5 class="mt-4">Biografía</h5>
+                    <p>{{ profile.bio|default:"Aún no hay biografía." }}</p>
+
+                    <h5 class="mt-4">Ubicación</h5>
+                    <p>{{ profile.location|default:"No especificada" }}</p>
+
+                    <h5 class="mt-4">Cumpleaños</h5>
+                    <p>{{ profile.birth_date|default:"No especificada" }}</p>
+
+                    {# El bloque de botones que incluye la nueva navegación #}
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a href="{% url 'category_selection' %}" class="btn btn-info me-2">Volver a Temas</a>
+                        <a href="{% url 'profile_edit' pk=user.pk %}" class="btn btn-warning">Editar Perfil</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

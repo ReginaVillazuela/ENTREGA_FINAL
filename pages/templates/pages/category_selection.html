@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Seleccionar Tema - DocuShare{% endblock title %}
+
+{% block content %}
+<style>
+    /* --- Estilos Generales --- */
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #1a73e8; /* Azul */
+    }
+
+    /* --- Estilos para la cuadrícula de categorías --- */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        padding: 30px;
+    }
+    .category-card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        padding: 15px; 
+    }
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .category-count {
+        font-size: 0.9rem;
+        font-weight: normal;
+        margin-top: 5px;
+        opacity: 0.8;
+    }
+    /* Definición de colores por código para mayor seguridad */
+    .color-BIO { background-color: #28a745; } /* Verde */
+    .color-CAL { background-color: #007bff; } /* Azul */
+    .color-CIE { background-color: #ffc107; color: #333; } /* Amarillo/Negro */
+    .color-NOV { background-color: #dc3545; } /* Rojo */
+    .color-OTR { background-color: #6f42c1; } /* Púrpura */
+
+
+    /* --- Estilos para el botón flotante --- */
+    .btn-floating-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
+    .btn-basic {
+        background-color: #4CAF50; /* Verde */
+        color: white;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 15px 25px;
+        border-radius: 50px; 
+        box-shadow: 0 4px 8px rgba(0, 128, 0, 0.5); 
+        transition: transform 0.2s;
+    }
+    .btn-basic:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<h1>Selecciona una Categoría</h1>
+
+<div class="grid">
+    {% for category in categories %}
+        <a href="{% url 'pages_list' %}?category={{ category.code }}" 
+           class="category-card color-{{ category.code }}">
+            
+            {{ category.name }}
+            <span class="category-count">({{ category.page_count }} Papers)</span>
+        </a>
+    {% endfor %}
+</div>
+
+{# Contenedor del Botón Flotante #}
+<div class="btn-floating-container">
+    {% if user.is_authenticated %}
+        <a href="{% url 'page_create' %}" class="btn-basic">
+            Crear Paper
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn-basic">
+            Crear Paper (Iniciar Sesión)
+        </a>
+    {% endif %}
+</div>
+
+{% endblock content %}
